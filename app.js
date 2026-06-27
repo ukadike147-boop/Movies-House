@@ -12,9 +12,19 @@ getMovieData()
 
 async function main() {
     let data = await getMovieData()
-    const movieList = document.querySelector(".movie-list")
+    const movieList = document.querySelector(".movies--container")
     console.log({ movieList })
-    const innerHTML = data.Search.map(movie => (`<div>${movie.Title}</div>`))
+    const innerHTML = data.Search.map(movie => (cardFunc(movie.Poster, movie.Title, movie.Year)))
     movieList.innerHTML = innerHTML
 }
 main()
+
+function cardFunc(img, title, rating) {
+    return `<div class="card">
+        <img src="${img}" alt="" class="movie-img">
+        <div class="content">
+            <p>title: ${title}</p>
+            <p>Year: ${rating}</p>
+        </div>
+    </div>`
+}
