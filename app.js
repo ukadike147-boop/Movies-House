@@ -1,5 +1,5 @@
 // API Key:  40038a32
-// API endpoint: http://www.omdbapi.com/?i=tt3896198&apikey=40038a32
+// API endpoint: https://www.omdbapi.com/?i=tt3896198&apikey=40038a32
 
 async function getMovieData() {
     const movies = await fetch("http://www.omdbapi.com/?i=tt3896198&apikey=40038a32&s=the hunger games")
