@@ -1,23 +1,32 @@
 // API Key:  40038a32
-// API endpoint: https://www.omdbapi.com/?i=tt3896198&apikey=40038a32
+// API endpoint: https://www.omdbapi.com/?apikey=40038a32
 
-async function getMovieData() {
-    const movies = await fetch("http://www.omdbapi.com/?i=tt3896198&apikey=40038a32&s=the hunger games")
-    let jsonMovie = await movies.json()
-    console.log({ jsonMovie })
-    return jsonMovie
+async function getMovieData(SearchTerm) {
+    const movies = await fetch(`https://www.omdbapi.com/?apikey=40038a32&s=${SearchTerm}`);
+    const jsonMovie = await movies.json();
+    return jsonMovie;
 }
+   const searchInput = document.getElementById("searchInput");
+   const searchBtn = document.getElementById("searchBtn");
+   const movielist = document.querySelector(".movies--container");
 
-getMovieData()
+   searchBtn.addEventListener("click", async function () {
+    const SearchTerm = searchInput.value.trim();
 
-async function main() {
-    let data = await getMovieData()
-    const movieList = document.querySelector(".movies--container")
-    console.log({ movieList })
-    const innerHTML = data.Search.map(movie => (cardFunc(movie.Poster, movie.Title, movie.Year)))
-    movieList.innerHTML = innerHTML
-}
-main()
+    if (SearchTerm === "") {
+        movielist.innerHTML = "<p>Please enter a movie title.</p>";
+        return;
+    }
+    const data = await getMovieData(SearchTerm);
+
+    if (!data.search) {
+        movieList.innerHTML = "<p> No movies found.</P>";
+        return;
+    }
+    movieList.innerHTML = data.search
+       .map(movie => cardFunc(movie.Poster, movie.Title, movie.Year))
+       .join("");
+});
 
 function cardFunc(img, title, rating) {
     return `<div class="card">

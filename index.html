@@ -15,7 +15,7 @@
       <div class="logo">My Website</div>
       <button class="burger" id="burgerbtn">
       </button>  
-      <ul class="nav-links" id="nav-links">
+      <ul class="nav-links" id="navLinks">
         <li><a href="#">Home</a></li>
         <li><a href="#">Movies</a></li>
         <li><a href="#">About</a></li>
@@ -24,13 +24,21 @@
     </nav>
     <main>
         <input id="searchInput" placeholder="Search movies">
-        <button id="searchInput">Search</button>
+        <button id="searchBtn">Search</button>
         <div class="movies--container">
             <div class="cards">
             </div>
         </div>
     </main>
-    <footer></footer>
+    <select id="sortSelect">
+        <option value="">Sort by</option>
+        <option value="year-new">Newest first</option>
+        <option value="year-old">Oldest first</option>
+        <option value="title">Title A-Z</option>
+    </select>
+    <footer>
+        <p>&copy; 2026 Movies House. Movie data provided by OMDb API.</p>
+    </footer>
     
     <script src="App.js"></script>
 </body>
