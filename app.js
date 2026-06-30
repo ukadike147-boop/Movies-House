@@ -29,7 +29,15 @@ async function getMovieData(SearchTerm) {
 });
 
 function cardFunc(img, title, rating) {
-    return
+     return `
+        <div class="card">
+            <img src="${img}" alt="${title}" class="movie-img">
+            <div class="content">
+                <p>Title: ${title}</p>
+                <p>Year: ${year}</p>
+            </div>
+        </div>
+    `;
     let movies = data.Search;
     const sortSelect = document.getElementById("sortSelect");
     if (sortSelect.value === "year-new") {
