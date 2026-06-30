@@ -29,10 +29,6 @@ async function getMovieData(SearchTerm) {
 });
 
 function cardFunc(img, title, year) {
-    let movies = data.Search;
-    movielist.innerHTML = movies
-    .map(movie => cardFunc(movie.Poster,movie.Title, movie.Year))
-    .join("");
     
      return `
         <div class="card">
