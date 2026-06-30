@@ -28,7 +28,7 @@ async function getMovieData(SearchTerm) {
        .join("");
 });
 
-function cardFunc(img, title, rating) {
+function cardFunc(img, title, year) {
      return `
         <div class="card">
             <img src="${img}" alt="${title}" class="movie-img">
@@ -39,7 +39,7 @@ function cardFunc(img, title, rating) {
         </div>
     `;
     let movies = data.Search;
-    const sortSelect = document.getElementById("sortSelect");
+    
     if (sortSelect.value === "year-new") {
         movies.sort((a, b) => b.Year - a.Year);
     }
