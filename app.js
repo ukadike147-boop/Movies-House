@@ -29,6 +29,11 @@ async function getMovieData(SearchTerm) {
 });
 
 function cardFunc(img, title, year) {
+    let movies = data.Search;
+    movielist.innerHTML = movies
+    .map(movie => cardFunc(movie.Poster,movie.Title, movie.Year))
+    .join("");
+    
      return `
         <div class="card">
             <img src="${img}" alt="${title}" class="movie-img">
@@ -38,8 +43,7 @@ function cardFunc(img, title, year) {
             </div>
         </div>
     `;
-    let movies = data.Search;
-    
+
     if (sortSelect.value === "year-new") {
         movies.sort((a, b) => b.Year - a.Year);
     }
@@ -49,9 +53,6 @@ function cardFunc(img, title, year) {
     if (sortSelect.value === "title") {
         movies.sort((a, b) => a.Title.localeCompare(b.Title));
     }
-    movielist.innerHTML = movies
-    .map(movie => cardFunc(movie.Poster,movie.Title, movie.Year))
-    .join("");
 }
 const burgerBtn = document.getElementById("burgerBtn");
 const navLinks = document.getElementById("navLinks");
