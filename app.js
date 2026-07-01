@@ -6,42 +6,59 @@ async function getMovieData(SearchTerm) {
     const jsonMovie = await movies.json();
     return jsonMovie;
 }
-   const searchInput = document.getElementById("searchInput");
-   const searchBtn = document.getElementById("searchBtn");
-   const movielist = document.querySelector(".movies--container");
-   const sortSelect = document.getElementById("sortSelect");
 
-   searchBtn.addEventListener("click", async function () {
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+const movielist = document.querySelector(".movies--container");
+const sortSelect = document.getElementById("sortSelect");
+
+let movies = [];
+
+function sortMovies(movieList) {
+    const sortedMovies = [...movieList];
+
+    if (sortSelect.value === "year-new") {
+        sortedMovies.sort((a, b) => Number(b.Year) - Number(a.Year));
+    }
+    if (sortSelect.value === "year-old") {
+        sortedMovies.sort((a, b) => Number(a.Year) - Number(b.Year));
+    }
+    if (sortSelect.value === "title") {
+        sortedMovies.sort((a, b) => a.Title.localeCompare(b.Title));
+    }
+
+    return sortedMovies;
+}
+
+function showMovies() {
+    movielist.innerHTML = sortMovies(movies)
+        .map(movie => cardFunc(movie.Poster, movie.Title, movie.Year))
+        .join("");
+}
+
+searchBtn.addEventListener("click", async function () {
     const SearchTerm = searchInput.value.trim();
 
     if (SearchTerm === "") {
         movielist.innerHTML = "<p>Please enter a movie title.</p>";
         return;
     }
+
     const data = await getMovieData(SearchTerm);
 
     if (!data.Search) {
-        movielist.innerHTML = "<p> No movies found.</P>";
+        movielist.innerHTML = "<p>No movies found.</p>";
         return;
     }
-    let movies = data.Search;
-    if (sortSelect.value === "year-new") {
-        movies.sort((a, b) => b.Year - a.Year);
-    }
-    if (sortSelect.value === "year-old") {
-        movies.sort((a, b) => a.Year - b.Year);
-    }
-    if (sortSelect.value === "title") {
-        movies.sort((a, b) => a.Title.localeCompare(b.Title));
-    }
-    movielist.innerHTML = data.Search
-       .map(movie => cardFunc(movie.Poster, movie.Title, movie.Year))
-       .join("");
+
+    movies = data.Search;
+    showMovies();
 });
 
-function cardFunc(img, title, year) {
+sortSelect.addEventListener("change", showMovies);
 
-     return `
+function cardFunc(img, title, year) {
+    return `
         <div class="card">
             <img src="${img}" alt="${title}" class="movie-img">
             <div class="content">
@@ -51,6 +68,7 @@ function cardFunc(img, title, year) {
         </div>
     `;
 }
+
 const burgerBtn = document.getElementById("burgerBtn");
 const navLinks = document.getElementById("navLinks");
 
